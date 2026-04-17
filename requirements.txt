@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+twilio
+pywhatkit
+selenium
+webdriver-manager
