@@ -1,8 +1,6 @@
-
 import logging
 import os
 import time
-import threading
 from pathlib import Path
 from typing import List, Optional
 from urllib.parse import urljoin, urlparse, parse_qs
@@ -62,7 +60,6 @@ logging.basicConfig(
 )
 
 
-
 class Announcement:
     def __init__(self, announcement_id: str, title: str, url: str):
         self.id = announcement_id
@@ -71,18 +68,6 @@ class Announcement:
 
     def __repr__(self) -> str:
         return f"Announcement(id={self.id!r}, title={self.title!r}, url={self.url!r})"
-
-
-def self_ping():
-    url = os.environ.get('RENDER_EXTERNAL_URL', 'https://smc-bot-kwlx.onrender.com/')
-    print(f"Self-ping started → {url}")
-    while True:
-        try:
-            requests.get(url, timeout=10)
-            print("Ping OK")
-        except:
-            print("Ping fail")
-        time.sleep(600)
 
 
 def load_last_processed_id() -> Optional[str]:
@@ -215,7 +200,6 @@ def initialize_session() -> requests.Session:
 
 def main() -> None:
     logging.info("Starting NSE Order Awards monitor for %s", ANNOUNCEMENTS_URL)
-    threading.Thread(target=self_ping, daemon=True).start()
     session = initialize_session()
     last_id = load_last_processed_id()
 
